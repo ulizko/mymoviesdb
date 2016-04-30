@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "mymoviesdb"
+
+if ARGV.empty? or ['-h', '--help'].include?(ARGV.first)
+  puts <<EOF
+  Usage: `mymoviesdb [option]` \n
+  -s, --show \n\t show movies list
+  -u, --update \n\t update movies list
+EOF
+  exit
+  
+end
+
+case ARGV.first
+when "-s" || "--show"
+  Mymoviesdb.show
+when "-u" || "--update"
+  system "ruby ./lib/mymoviesdb/web_scraper.rb > ./data/movies.json"
+else
+  exit(1)
+end

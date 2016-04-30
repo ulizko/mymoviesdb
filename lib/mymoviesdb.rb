@@ -1,5 +1,13 @@
-require "mymoviesdb/version"
+require 'bundler/setup'
+require 'mymoviesdb/version'
+require_relative 'mymoviesdb/movies_list'
 
 module Mymoviesdb
-  # Your code goes here...
+  
+  def Mymoviesdb.show
+    path = "./data/movies.json"
+    list = MoviesList.new(path)
+    list.print
+  end
+
 end

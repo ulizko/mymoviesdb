@@ -7,7 +7,7 @@ require_relative '../lib/mymoviesdb/classic_movie.rb'
 require_relative '../lib/mymoviesdb/new_movie.rb'
 require_relative '../lib/mymoviesdb.rb'
 
-RSpec.describe Movie do
+RSpec.describe MyMoviesDB::Movie do
   
   let(:hash) do {
                 url: "http://www.imdb.com/title/tt0071562/?ref_=chttp_tt_3",
@@ -22,7 +22,7 @@ RSpec.describe Movie do
                 actors: "Al Pacino,Robert De Niro,Robert Duvall"
                 }
   end
-  subject { Movie.new(hash) }
+  subject { MyMoviesDB::Movie.new(hash) }
   
   its(:year) {is_expected.to be_a Fixnum}
   its(:duration) {is_expected.to be_a Fixnum}
@@ -31,10 +31,7 @@ RSpec.describe Movie do
   its(:actors) {is_expected.to eq ["Al Pacino", "Robert De Niro", "Robert Duvall"]}
   its(:director) {is_expected.to eq "Francis Ford Coppola"}
   its(:director_surname) {is_expected.to eq "Coppola"}
-  it "should release" do
-  expect(subject.release).to be_a(String)
-    
-  end
+  its(:release) {is_expected.to be_a String}
   its(:month_name) {is_expected.to eq "December"}
   its(:stars) {is_expected.to eq "**********"}
   
@@ -50,13 +47,13 @@ RSpec.describe Movie do
                    rating: "9.0",
                    director: "Francis Ford Coppola",
                    actors: "Al Pacino,Robert De Niro,Robert Duvall" }
-      Movie.create(**defaults.merge(params))
+      MyMoviesDB::Movie.create(**defaults.merge(params))
     end
     
-    it { expect(movie).to be_an_instance_of ModernMovie }
-    it { expect(movie(year: "1950")).to be_an_instance_of ClassicMovie }
-    it { expect(movie(year: "1930")).to be_an_instance_of AncientMovie }
-    it { expect(movie(year: "2012")).to be_an_instance_of NewMovie }
+    it { expect(movie).to be_an_instance_of MyMoviesDB::ModernMovie }
+    it { expect(movie(year: "1950")).to be_an_instance_of MyMoviesDB::ClassicMovie }
+    it { expect(movie(year: "1930")).to be_an_instance_of MyMoviesDB::AncientMovie }
+    it { expect(movie(year: "2012")).to be_an_instance_of MyMoviesDB::NewMovie }
     context "user rating movie" do
       let(:movie_rated) { movie }
     

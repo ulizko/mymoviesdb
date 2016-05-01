@@ -1,10 +1,10 @@
 require_relative 'rateable_movie.rb'
 
-
+module MyMoviesDB
   class ModernMovie < RateableMovie
-    
+
     weight 4
-    print_format "%{title} - is modern movie, starring: %{actors}"
+    print_format '%{title} - is modern movie, starring: %{actors}'
     filter { (1969..2000).cover?(year) }
-  
   end
+end

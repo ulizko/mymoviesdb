@@ -1,9 +1,10 @@
 require_relative 'rateable_movie.rb'
 
-
+module MyMoviesDB
   class ClassicMovie < RateableMovie
-    
+
     weight 1
-    print_format "%{title} - is classic movie, director: %{director}"
+    print_format '%{title} - is classic movie, director: %{director}'
     filter { (1946..1968).cover?(year) }
   end
+end

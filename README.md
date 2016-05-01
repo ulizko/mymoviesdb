@@ -1,8 +1,7 @@
 # Mymoviesdb
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/mymoviesdb`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This training project. 
+Gem `mymoviesdb` pulls out a list of the top 250 movies IMDb and saves it.
 
 ## Installation
 
@@ -22,7 +21,29 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### From console
+
+Use `mymoviesdb -h` for details.
+
+#### Update your movies list
+
+    mymoviesdb -u [--path `select where to save list`]
+    
+#### Show your movies list
+
+    mymoviesdb -s 
+    
+##### add the output criterion
+
+    mymoviesdb -s -m sort_by_field,duration #=> sorted your list by duration
+    
+##### show recommendation 5 movies
+
+    mymoviesdb -s -r
+    
+##### show recommendation only selected genre movies
+
+    mymoviesdb -s -r -g drama
 
 ## Development
 

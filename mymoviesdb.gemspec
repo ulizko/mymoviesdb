@@ -5,7 +5,7 @@ require 'mymoviesdb/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "mymoviesdb"
-  spec.version       = Mymoviesdb::VERSION
+  spec.version       = MyMoviesDB::VERSION
   spec.authors       = ["Oleksandr Ulizko"]
   spec.email         = ["shurikovich@bigmir.net"]
 
@@ -36,4 +36,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'webmock'
   spec.add_development_dependency 'rubygems-tasks'
+  spec.add_development_dependency 'rubocop'
+  spec.add_development_dependency 'slop', '~> 4.3'
 end

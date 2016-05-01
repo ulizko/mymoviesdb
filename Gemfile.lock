@@ -1,0 +1,81 @@
+PATH
+  remote: .
+  specs:
+    mymoviesdb (0.1.0)
+      nokogiri
+      themoviedb
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    addressable (2.4.0)
+    ast (2.2.0)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
+    diff-lcs (1.2.5)
+    hashdiff (0.3.0)
+    httparty (0.13.7)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
+    json (1.8.3)
+    mini_portile2 (2.0.0)
+    multi_xml (0.5.5)
+    nokogiri (1.6.7.2)
+      mini_portile2 (~> 2.0.0.rc2)
+    parser (2.3.1.0)
+      ast (~> 2.2)
+    powerpack (0.1.1)
+    rainbow (2.1.0)
+    rake (10.5.0)
+    rspec (3.4.0)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
+    rspec-core (3.4.4)
+      rspec-support (~> 3.4.0)
+    rspec-expectations (3.4.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-its (1.2.0)
+      rspec-core (>= 3.0.0)
+      rspec-expectations (>= 3.0.0)
+    rspec-mocks (3.4.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.1)
+    rubocop (0.39.0)
+      parser (>= 2.3.0.7, < 3.0)
+      powerpack (~> 0.1)
+      rainbow (>= 1.99.1, < 3.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (~> 1.0, >= 1.0.1)
+    ruby-progressbar (1.8.0)
+    rubygems-tasks (0.2.4)
+    safe_yaml (1.0.4)
+    slop (4.3.0)
+    themoviedb (1.0.1)
+      httparty
+    unicode-display_width (1.0.5)
+    vcr (3.0.1)
+    webmock (1.24.5)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.11)
+  mymoviesdb!
+  rake (~> 10.0)
+  rspec
+  rspec-its
+  rubocop
+  rubygems-tasks
+  slop (~> 4.3)
+  vcr
+  webmock
+
+BUNDLED WITH
+   1.11.2

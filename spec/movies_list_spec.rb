@@ -4,9 +4,9 @@ require_relative '../lib/mymoviesdb/movie.rb'
 require_relative '../lib/mymoviesdb/movies_list.rb'
 require_relative '../lib/mymoviesdb/recommendation.rb'
 
-RSpec.describe MoviesList do
+RSpec.describe MyMoviesDB::MoviesList do
   
-  subject { MoviesList.new("./spec/fixtures/movies.json") }
+  subject { MyMoviesDB::MoviesList.new("./spec/fixtures/movies.json") }
   
   its("movies_list.size") {is_expected.to eq 20}
   

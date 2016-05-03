@@ -29,7 +29,7 @@ module MyMoviesDB
     end
 
     def search_by_field(field, str)
-      @movies_list.select { |v| v.send(field).downcase.include? str.downcase }
+      @movies_list.select { |v| v.send(field).downcase.include? str.to_s.downcase }
     end
 
     def group_by_field(field)

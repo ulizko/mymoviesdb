@@ -6,7 +6,6 @@ require 'slop'
 require 'mymoviesdb'
 require_relative 'scraper.rb'
 
-
 opts = Slop.parse do |opt|
   opt.bool '-s', '--show', 'showing movies list'
   opt.separator "\tshow [option]:"
@@ -26,31 +25,36 @@ end
 list = MyMoviesDB::MoviesList.new(opts[:path]) unless opts[:update]
 
 if opts[:update]
-  Scraper.run(opts[:path])
-end
-
-if opts[:recomm]
-  recommendation = list.get_recommendation
-elsif
-  recommendation = list.get_recommendation_watched
+  MyMoviesDB::Scraper.new(opts[:path]).run
 end
 
 if opts[:genre]
   name_gen = "#{opts[:genre]}?".to_sym
-  printed = recommendation.select { |v| v.send(name_gen) }
-else
-  printed = recommendation
+  blk = ->(v) { v.send(name_gen) }
+end
+
+if opts[:recomm]
+  recommendation = list.get_recommendation
+end
+
+if opts[:rwatch]
+  recommendation = list.get_recommendation_watched
+end
+
+unless opts[:method].empty?
+  method, *arg = opts[:method]
 end
 
 if opts[:show]
-  list.print if opts[:method].empty? && !(opts[:recomm] || opts[:rwatch])
-  list.print_movie(printed) if opts[:recomm] || opts[:rwatch]
-
-  if opts[:method]
-    method, arg = opts[:method]
-  end
-
-  if method
-    list.print_movie(list.send(method.to_sym, arg.to_sym))
+  case
+  when !opts[:method].empty?
+    list.print_movie(list.send(method.to_sym, *arg.map(&:to_sym)))
+  when opts[:recomm] || opts[:rwatch]
+    printed =
+      opts[:genre] ? recommendation.select(&blk) : recommendation
+    list.print_movie(printed)
+  else
+    printed = list.movies_list.select(&blk)
+    opts[:genre] ? list.print_movie(printed) : list.print
   end
 end

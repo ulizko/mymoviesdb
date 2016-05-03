@@ -6,37 +6,38 @@ module MyMoviesDB
     include Recommendation
 
     MIN_RATING = 8
-    CONVERTERS = {duration: :to_i.to_proc, year: :to_i.to_proc,
-                  genre: ->(v) { v.split(',') },
-                  rating: :to_f.to_proc,
-                  actors: ->(v) { v.split(',') }
-                  }
 
     attr_accessor :url, :title, :year, :country, :release, :genre, :duration,
                   :rating, :director, :actors
 
     def initialize(fields)
       fields.each do |k, v|
-        instance_variable_set("@#{k}", (CONVERTERS[k].nil? ? v : CONVERTERS[k].call(v)))
+        instance_variable_set("@#{k}", v)
       end
     end
-
+# 
     def to_s
       '%s is directed by %s in %s, played a starring %s, ' \
       'Genre: %s, %d minutes duration. The film premiered in %s. ' \
       'Country: %s. Rating: %s' % [title, director, year, actors.join(', '),
       genre.join(', '), duration, release, country, stars]
     end
-
+# Представляет рейтинг фильма в виде звезд
+# @param [#rating] 
+# @return [String] одна звезда равна 0.1 рейтинга больше 8.0
     def stars
       rating_star = ((rating - MIN_RATING) * 10).to_i
       ''.ljust(rating_star, '*')
     end
 
+# @param [#director]
+# @return [String] фамилия режиссера
     def director_surname
       director.split(' ').last
     end
-
+# Возвращает название месяца релиза фильма
+# @param [#release]
+# @return [String] название месяца 
     def month_name
       str = release
       month = Date.strptime(str[0..6], '%Y-%m').mon

@@ -4,7 +4,6 @@
 require 'bundler/setup'
 require 'slop'
 require 'mymoviesdb'
-require_relative 'scraper.rb'
 
 opts = Slop.parse do |opt|
   opt.bool '-s', '--show', 'showing movies list'
@@ -14,19 +13,13 @@ opts = Slop.parse do |opt|
   opt.bool '-rw', '--rwatch', 'showing recommendation list wathed movies'
   opt.string '-g', '--genre', 'showing only selected genres movie, e.g. `comedy?`'
   opt.separator ' '
-  opt.bool '-u', '--update', 'updating movies list'
-  opt.string '-p', '--path', 'set a file storage path', default: './data/movies.json'
   opt.on '-h', '--help' do
     puts opt
     exit
   end
 end
 
-list = MyMoviesDB::MoviesList.new(opts[:path]) unless opts[:update]
-
-if opts[:update]
-  MyMoviesDB::Scraper.new(opts[:path]).run
-end
+list = MyMoviesDB::MoviesList.new(opts[:path])
 
 if opts[:genre]
   name_gen = "#{opts[:genre]}?".to_sym

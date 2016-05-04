@@ -112,3 +112,4 @@ RSpec::Matchers.define :be_uniq do
     array.uniq == array
   end
 end
+

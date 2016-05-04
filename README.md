@@ -27,7 +27,7 @@ Use `mymoviesdb -h` for details.
 
 #### Update your movies list
 
-    mymoviesdb -u [--path `select where to save list`]
+    scraper
     
 #### Show your movies list
 

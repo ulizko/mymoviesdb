@@ -1,3 +1,6 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
 %w(bundler/setup nokogiri open-uri json ruby-progressbar mymoviesdb)
   .each { |v| require v }
 
@@ -7,7 +10,6 @@ module MyMoviesDB
 
     def initialize(path)
       @path = path
-      @bar = progress
     end
 
     def run
@@ -26,8 +28,9 @@ module MyMoviesDB
     end
 
     def get_movies
+      bar = progress
       links.map do |link|
-        @bar.increment
+        bar.increment
         movie = Nokogiri::HTML(open(link))
         url = link
         title = movie.xpath('//div[@class="title_wrapper"]/h1').children.first.text.gsub(/[[:space:]]+$/, '')
@@ -59,4 +62,6 @@ module MyMoviesDB
         .create(length: 150, total: 250, format: '%a %B %p%% %t')
     end
   end
+  Scraper.new('../data/movies.json').run
 end
+

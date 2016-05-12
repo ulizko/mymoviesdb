@@ -8,3 +8,6 @@
 /spec/reports/
 /tmp/
 /spec/fixtures/
+/1000/
+/config/
+/spec/vcr_cassettes/

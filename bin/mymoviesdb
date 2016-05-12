@@ -1,23 +1,53 @@
 #!/usr/bin/env ruby
+# encoding: utf-8
 
-require "bundler/setup"
-require "mymoviesdb"
+require 'bundler/setup'
+require 'slop'
+require 'mymoviesdb'
 
-if ARGV.empty? or ['-h', '--help'].include?(ARGV.first)
-  puts <<EOF
-  Usage: `mymoviesdb [option]` \n
-  -s, --show \n\t show movies list
-  -u, --update \n\t update movies list
-EOF
-  exit
-  
+opts = Slop.parse do |opt|
+  opt.bool '-s', '--show', 'showing movies list'
+  opt.separator "\tshow [option]:"
+  opt.array '-m', '--method', 'add criterion, e.g. `method_name,field`', delimiter: ','
+  opt.bool '-r', '--recomm', 'showing recommendation list unwathed movies'
+  opt.bool '-rw', '--rwatch', 'showing recommendation list wathed movies'
+  opt.string '-g', '--genre', 'showing only selected genres movie, e.g. `comedy?`'
+  opt.separator ' '
+  opt.on '-h', '--help' do
+    puts opt
+    exit
+  end
 end
 
-case ARGV.first
-when "-s" || "--show"
-  Mymoviesdb.show
-when "-u" || "--update"
-  system "ruby ./lib/mymoviesdb/web_scraper.rb > ./data/movies.json"
-else
-  exit(1)
+list = MyMoviesDB::MoviesList.new('./data/movies.json')
+
+if opts[:genre]
+  name_gen = "#{opts[:genre]}?".to_sym
+  blk = ->(v) { v.send(name_gen) }
+end
+
+if opts[:recomm]
+  recommendation = list.get_recommendation
+end
+
+if opts[:rwatch]
+  recommendation = list.get_recommendation_watched
+end
+
+unless opts[:method].empty?
+  method, *arg = opts[:method]
+end
+
+if opts[:show]
+  case
+  when !opts[:method].empty?
+    list.print_movie(list.send(method.to_sym, *arg.map(&:to_sym)))
+  when opts[:recomm] || opts[:rwatch]
+    printed =
+      opts[:genre] ? recommendation.select(&blk) : recommendation
+    list.print_movie(printed)
+  else
+    printed = list.movies_list.select(&blk)
+    opts[:genre] ? list.print_movie(printed) : list.print
+  end
 end

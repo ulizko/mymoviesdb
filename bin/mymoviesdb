@@ -18,8 +18,8 @@ opts = Slop.parse do |opt|
     exit
   end
 end
-
-list = MyMoviesDB::MoviesList.new(opts[:path])
+file = File.expand_path('../data/movies.json', File.dirname(__FILE__))
+list = MyMoviesDB::MoviesList.new(file)
 
 if opts[:genre]
   name_gen = "#{opts[:genre]}?".to_sym

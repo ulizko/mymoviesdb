@@ -62,6 +62,7 @@ module MyMoviesDB
         .create(length: 150, total: 250, format: '%a %B %p%% %t')
     end
   end
-  Scraper.new('../data/movies.json').run
+  file = File.expand_path('../data/movies.json', File.dirname(__FILE__))
+  Scraper.new(file).run
 end
 

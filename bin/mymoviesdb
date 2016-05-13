@@ -18,6 +18,7 @@ opts = Slop.parse do |opt|
     exit
   end
 end
+
 file = File.expand_path('../data/movies.json', File.dirname(__FILE__))
 list = MyMoviesDB::MoviesList.new(file)
 
